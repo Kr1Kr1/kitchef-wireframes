@@ -3,279 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KitChef — Home screen wireframe v6</title>
+<title>KitChef — Home screen wireframes</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #F5F4F0; --surface: #FFF; --surface2: #F0EFE9;
-    --border: rgba(0,0,0,0.08); --border-med: rgba(0,0,0,0.13);
+    --bg: #F5F4F0; --surface: #FFF;
+    --border: rgba(0,0,0,0.08);
     --text: #1A1A18; --text-2: #6B6B65; --text-3: #A8A8A0;
     --font: 'DM Sans', system-ui, sans-serif; --mono: 'DM Mono', monospace;
-    --warn-bg: #FEF3CD; --warn-text: #92650A;
     --ok-bg: #DCFCE7; --ok-text: #166534;
     --info-bg: #E0F2FE; --info-text: #0369A1;
-    --karin-bg: #EEF2FF; --karin-text: #3730A3;
-    --mehdi-bg: #FFF7ED; --mehdi-text: #C2410C;
   }
   body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  .page-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 22px 48px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo-mark { width: 30px; height: 30px; background: var(--text); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-  .logo-name { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
-  .v-badge { font-size: 11px; padding: 3px 10px; background: var(--info-bg); color: var(--info-text); border-radius: 20px; font-weight: 500; }
-  .page-meta { font-size: 12px; color: var(--text-3); font-family: var(--mono); }
-
-  .tabs-wrap { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; }
-  .tabs { display: flex; }
-  .tab-btn { padding: 14px 20px; font-size: 13px; font-weight: 500; color: var(--text-3); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; font-family: var(--font); transition: color 0.15s, border-color 0.15s; }
-  .tab-btn.active { color: var(--text); border-bottom-color: var(--text); }
-  .tab-btn:hover:not(.active) { color: var(--text-2); }
-
-  .intro { padding: 32px 48px 16px; max-width: 900px; }
-  .intro h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; }
-  .intro p { font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: 600px; }
-
-  /* DÉBAT BOX */
-  .debate { margin: 0 48px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .debate-card { border-radius: 12px; padding: 16px 18px; border: 1px solid transparent; }
-  .debate-card.tom { background: var(--karin-bg); border-color: #C7D2FE; }
-  .debate-card.mehdi { background: var(--mehdi-bg); border-color: #FED7AA; }
-  .debate-who { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-family: var(--mono); margin-bottom: 6px; }
-  .debate-who.karin { color: var(--karin-text); }
-  .debate-who.mehdi { color: var(--mehdi-text); }
-  .debate-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-  .debate-desc { font-size: 12px; color: var(--text-2); line-height: 1.6; }
-  .debate-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-top: 8px; font-family: var(--mono); }
-  .debate-tag.karin { background: #C7D2FE; color: var(--karin-text); }
-  .debate-tag.mehdi { background: #FED7AA; color: var(--mehdi-text); }
-
-  .variant-panel { display: none; padding: 0 48px 48px; }
-  .variant-panel.active { display: block; }
-
-  /* COLUMNS HEADER */
-  .cols-header { display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
-  .col-header { width: 316px; }
-  .col-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); margin-bottom: 4px; }
-  .col-label.karin { color: var(--karin-text); }
-  .col-label.mehdi { color: var(--mehdi-text); }
-  .col-sublabel { font-size: 12px; color: var(--text-2); }
-
-  .screens-grid { display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
-  .screen-col { display: flex; flex-direction: column; gap: 12px; }
-  .screen-col-label { font-size: 13px; font-weight: 500; color: var(--text-2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .state-pill { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-family: var(--mono); font-weight: 400; }
-  .state-pill.new { background: var(--warn-bg); color: var(--warn-text); }
-  .state-pill.active { background: var(--ok-bg); color: var(--ok-text); }
-  .state-pill.tom { background: var(--karin-bg); color: var(--karin-text); }
-  .state-pill.mehdi { background: var(--mehdi-bg); color: var(--mehdi-text); }
-
-  /* PHONE */
-  .phone { width: 316px; background: #FFF; border-radius: 44px; border: 2px solid #D0CFC8; overflow: hidden; box-shadow: 0 2px 0 #B8B7B0, 0 16px 48px rgba(0,0,0,0.10); position: relative; }
-  .phone.karin-phone { border-color: #A5B4FC; box-shadow: 0 2px 0 #818CF8, 0 16px 48px rgba(99,102,241,0.12); }
-  .phone.mehdi-phone { border-color: #FDBA74; box-shadow: 0 2px 0 #FB923C, 0 16px 48px rgba(249,115,22,0.12); }
-  .phone::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 88px; height: 28px; background: #FFF; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; border-bottom: 2px solid #D0CFC8; border-left: 2px solid #D0CFC8; border-right: 2px solid #D0CFC8; z-index: 10; }
-  .phone.karin-phone::before { border-color: #A5B4FC; }
-  .phone.mehdi-phone::before { border-color: #FDBA74; }
-  .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 32px 22px 4px; font-size: 12px; font-weight: 600; color: #1A1A18; font-family: var(--mono); }
-  .screen { overflow-y: auto; max-height: 600px; padding-bottom: 72px; }
-  .screen::-webkit-scrollbar { display: none; }
-
-  /* HEADER */
-  .hdr { padding: 14px 18px 8px; display: flex; justify-content: space-between; align-items: flex-start; }
-  .greeting { font-size: 19px; font-weight: 600; color: #1A1A18; line-height: 1.25; letter-spacing: -0.02em; }
-  .greeting-sub { font-size: 13px; color: #6B6B65; margin-top: 2px; }
-  .hdr-right { display: flex; align-items: flex-start; gap: 6px; }
-  .crown-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
-  .crown-btn { width: 28px; height: 28px; border-radius: 8px; background: #FFFBEB; border: 1px solid #FDE68A; display: flex; align-items: center; justify-content: center; margin-top: 3px; }
-  .crown-btn svg { width: 14px; height: 14px; }
-  .crown-lbl { font-size: 9px; color: #92650A; font-family: var(--mono); }
-  .ava-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
-  .ava { width: 34px; height: 34px; border-radius: 50%; background: #F0EFE9; border: 1.5px solid #D0CFC8; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #6B6B65; margin-top: 3px; }
-  .ava-lbl { font-size: 9px; color: #A8A8A0; font-family: var(--mono); }
-
-  /* SECTIONS */
-  .s { padding: 6px 18px; }
-  .sh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
-  .st { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #A8A8A0; font-family: var(--mono); }
-  .sl { font-size: 11px; color: #A8A8A0; }
-  .bdg { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: #FEF3CD; color: #92650A; font-weight: 500; }
-  .bdg.ok { background: #DCFCE7; color: #166534; }
-
-  /* OBJECTIF */
-  .obj { background: #F0EFE9; border-radius: 13px; border: 1px solid rgba(0,0,0,0.06); padding: 11px 13px; }
-  .prog-track { height: 4px; background: rgba(0,0,0,0.08); border-radius: 99px; overflow: hidden; margin-bottom: 9px; }
-  .prog-fill { height: 100%; border-radius: 99px; background: #1A1A18; }
-  .stats-row { display: flex; gap: 7px; }
-  .stat { flex: 1; background: #FFF; border: 1px solid rgba(0,0,0,0.07); border-radius: 9px; padding: 7px 9px; }
-  .sv { font-size: 13px; font-weight: 600; color: #1A1A18; }
-  .sl2 { font-size: 10px; color: #A8A8A0; margin-top: 1px; font-family: var(--mono); }
-
-  /* CE SOIR / MIDI */
-  .meal-moment-tabs { display: flex; gap: 6px; margin-bottom: 8px; }
-  .mmt { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); background: #FFF; color: #6B6B65; cursor: pointer; font-family: var(--font); }
-  .mmt.on { background: #1A1A18; color: #FFF; border-color: transparent; }
-
-  .tonight-card { background: #1A1A18; border-radius: 13px; padding: 13px 14px; display: flex; align-items: center; gap: 12px; }
-  .tonight-thumb { width: 44px; height: 44px; border-radius: 9px; background: #333330; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-  .tonight-info { flex: 1; min-width: 0; }
-  .tonight-label { font-size: 10px; color: #6B6B65; font-family: var(--mono); margin-bottom: 2px; }
-  .tonight-title { font-size: 14px; font-weight: 600; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tonight-meta { font-size: 11px; color: #6B6B65; margin-top: 2px; }
-  .tonight-cta { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #FFF; flex-shrink: 0; }
-
-  .tonight-empty { background: #F0EFE9; border-radius: 13px; border: 1px dashed rgba(0,0,0,0.14); padding: 13px 14px; display: flex; align-items: center; gap: 12px; }
-  .tonight-empty-icon { width: 40px; height: 40px; border-radius: 9px; background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .tonight-empty-info { flex: 1; }
-  .tonight-empty-title { font-size: 13px; font-weight: 500; color: #6B6B65; }
-  .tonight-empty-sub { font-size: 11px; color: #A8A8A0; margin-top: 1px; }
-  .tonight-empty-btn { font-size: 11px; padding: 5px 10px; background: #FFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 7px; color: #1A1A18; cursor: pointer; font-family: var(--font); flex-shrink: 0; }
-
-  /* MEAL PLAN */
-  .mp { background: #F0EFE9; border-radius: 13px; border: 1px solid rgba(0,0,0,0.06); padding: 11px 13px; }
-  .wg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 8px; }
-  .dc { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .dl { font-size: 9px; color: #A8A8A0; font-family: var(--mono); }
-  .dm { width: 30px; height: 30px; border-radius: 8px; background: #FFF; border: 1px solid rgba(0,0,0,0.07); display: flex; align-items: center; justify-content: center; font-size: 14px; }
-  .dm.empty { background: rgba(0,0,0,0.03); border-style: dashed; }
-  .dm.today { border: 1.5px solid #1A1A18; }
-  .cta-dashed { width: 100%; padding: 7px; background: #FFF; border: 1px dashed rgba(0,0,0,0.14); border-radius: 9px; font-size: 11px; color: #6B6B65; cursor: pointer; text-align: center; font-family: var(--font); }
-
-  /* RECETTES — variante commune */
-  .rr { display: flex; align-items: center; gap: 9px; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
-  .rr:last-child { border-bottom: none; }
-  .rt { width: 38px; height: 38px; border-radius: 9px; background: #F0EFE9; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .ri { flex: 1; min-width: 0; }
-  .rtitle { font-size: 12px; font-weight: 500; color: #1A1A18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .rmeta { font-size: 10px; color: #A8A8A0; margin-top: 1px; font-family: var(--mono); }
-  .rc { font-size: 9px; padding: 2px 7px; background: #F0EFE9; border-radius: 20px; color: #6B6B65; border: 1px solid rgba(0,0,0,0.06); flex-shrink: 0; font-family: var(--mono); }
-
-  /* RECETTES TOM — "à cuisiner" : bouton ajouter au menu */
-  .rc-add { font-size: 10px; padding: 3px 8px; background: #EEF2FF; border: 1px solid #C7D2FE; border-radius: 20px; color: var(--karin-text); cursor: pointer; flex-shrink: 0; font-family: var(--font); white-space: nowrap; }
-
-  /* RECETTES MEHDI — "cuisinées" : badge check + date */
-  .rc-done { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--ok-text); flex-shrink: 0; font-family: var(--mono); }
-  .rc-done-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--ok-bg); display: flex; align-items: center; justify-content: center; font-size: 9px; }
-
-  /* EMPTY */
-  .es { display: flex; flex-direction: column; align-items: center; padding: 16px; gap: 8px; background: #F0EFE9; border-radius: 13px; border: 1px dashed rgba(0,0,0,0.12); }
-  .es p { font-size: 11px; color: #6B6B65; text-align: center; line-height: 1.5; }
-  .ec { padding: 6px 14px; background: #FFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 7px; font-size: 11px; color: #1A1A18; cursor: pointer; font-family: var(--font); }
-
-  /* TAB BAR */
-  .tbar { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: rgba(255,255,255,0.96); border-top: 1px solid rgba(0,0,0,0.07); display: flex; align-items: center; padding: 0 2px; }
-  .tb { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding-top: 7px; }
-  .tb svg { width: 18px; height: 18px; }
-  .tlbl { font-size: 8.5px; color: #A8A8A0; font-family: var(--mono); }
-  .tb.on .tlbl { color: #1A1A18; font-weight: 500; }
-
-  /* ANNOTATIONS */
-  .annots { margin-top: 14px; display: flex; flex-direction: column; gap: 7px; max-width: 316px; }
-  .ann { display: flex; gap: 8px; align-items: flex-start; }
-  .ann-n { width: 19px; height: 19px; border-radius: 50%; color: #FFF; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .ann-n.karin { background: #6366F1; }
-  .ann-n.mehdi { background: #EA580C; }
-  .ann-n.neutral { background: #1A1A18; }
-  .ann-t { font-size: 12px; color: #6B6B65; line-height: 1.5; }
-  .ann-t strong { color: #1A1A18; font-weight: 500; }
-
-  /* NOTES */
-  .notes { padding: 32px 48px 48px; border-top: 1px solid var(--border); }
-  .notes-title { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-3); font-family: var(--mono); margin-bottom: 18px; }
-  .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; max-width: 960px; }
-  .nc { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); padding: 14px 16px; }
-  .nc h3 { font-size: 13px; font-weight: 500; margin-bottom: 5px; }
-  .nc p { font-size: 12px; color: var(--text-2); line-height: 1.6; }
-  .nc.karin { border-color: #A5B4FC; background: var(--karin-bg); }
-  .nc.karin h3 { color: var(--karin-text); }
-  .nc.mehdi { border-color: #FDBA74; background: var(--mehdi-bg); }
-  .nc.mehdi h3 { color: var(--mehdi-text); }
-  .nc.open { border-color: #FDE68A; background: #FFFBEB; }
-  .nc.open h3 { color: #92650A; }
-  .nc.done { border-color: #86EFAC; background: #F0FDF4; }
-  .nc.done h3 { color: #166534; }
-
-  .footer { padding: 20px 48px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); font-family: var(--mono); display: flex; justify-content: space-between; }
-
-  @media (max-width: 820px) {
-    .page-header, .tabs-wrap, .intro, .variant-panel, .debate, .notes, .footer { padding-left: 20px; padding-right: 20px; }
-    .debate { margin-left: 20px; margin-right: 20px; grid-template-columns: 1fr; }
+  /* TOP BAR */
+  .topbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 14px 24px; display: flex; align-items: center; gap: 16px;
+    position: sticky; top: 0; z-index: 1000;
   }
+  .logo { display: flex; align-items: center; gap: 8px; }
+  .logo-mark { width: 26px; height: 26px; background: #1A1A18; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-name { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; color: #1A1A18; }
+
+  .version-select-wrap { display: flex; align-items: center; gap: 8px; }
+  .version-label { font-size: 11px; color: var(--text-3); font-family: var(--mono); }
+  .version-select {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    padding: 5px 28px 5px 10px; border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.15); background: var(--surface);
+    color: var(--text); cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23A8A8A0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 8px center;
+  }
+  .version-badge {
+    font-size: 10px; padding: 2px 8px; border-radius: 20px;
+    font-family: var(--mono); font-weight: 400;
+  }
+  .version-badge.archived { background: #F0EFE9; color: var(--text-3); }
+  .version-badge.current { background: var(--ok-bg); color: var(--ok-text); }
+
+  .topbar-right { margin-left: auto; font-size: 11px; color: var(--text-3); font-family: var(--mono); }
+
+  /* VERSION PANELS */
+  .version-panel { display: none; }
+  .version-panel.active { display: block; }
+
+  /* V1 frame wrapper — full page embed without scroll bars */
+  .v1-frame-wrap { width: 100%; }
+  .v1-frame { width: 100%; border: none; display: block; }
 </style>
 </head>
 <body>
 
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-mark"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 3.5a1 1 0 011-1h7a1 1 0 011 1v7a1 1 0 01-1 1h-7a1 1 0 01-1-1v-7z" fill="white" fill-opacity="0.15"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <span class="logo-name">KitChef</span>
+  </div>
+
+  <div class="version-select-wrap">
+    <span class="version-label">version</span>
+    <select class="version-select" onchange="switchVersion(this.value)">
+      <option value="v1">v1 — Deux blocs séparés</option>
+      <option value="vcurrent" selected>v current — Bloc semaine fusionné</option>
+    </select>
+    <span class="version-badge archived" id="badge-v1" style="display:none">archivée</span>
+    <span class="version-badge current" id="badge-vcurrent">en cours</span>
+  </div>
+
+  <div class="topbar-right">Home screen · Option B · 5 onglets · avril 2026</div>
+</div>
+
+<!-- V1 : l'ancienne v7 embarquée telle quelle dans un iframe -->
+<div class="version-panel" id="panel-v1">
+  <iframe
+    class="v1-frame"
+    id="v1-iframe"
+    srcdoc=""
+    onload="resizeIframe(this)"
+    scrolling="no">
+  </iframe>
+</div>
+
+<!-- V CURRENT : la nouvelle proposition -->
+<div class="version-panel active" id="panel-vcurrent">
 <header class="page-header">
   <div class="logo">
     <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4a1 1 0 011-1h8a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" fill="white" fill-opacity="0.15"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <span class="logo-name">KitChef</span>
   </div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <span class="page-meta">Home screen · wireframe v6 · avril 2026</span>
-    <span class="v-badge">Karin vs Mehdi</span>
-  </div>
+  <span class="page-meta">Home screen · wireframes · avril 2026</span>
 </header>
 
 <div class="tabs-wrap">
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('a')">Option A — Sans objectifs</button>
-    <button class="tab-btn" onclick="switchTab('b')">Option B — Avec objectifs</button>
+    <button class="tab-btn" onclick="switchTab('v1')">
+      v1 — Deux blocs séparés <span class="tab-version archived">archivé</span>
+    </button>
+    <button class="tab-btn active" onclick="switchTab('vcurrent')">
+      v current — Bloc semaine fusionné <span class="tab-version current">en cours</span>
+    </button>
   </div>
+  <span class="changelog-link">Option B · objectifs · 5 onglets</span>
 </div>
 
-<div style="height:20px"></div>
-
-<!-- DEBATE BOX -->
-<div class="debate">
-  <div class="debate-card tom">
-    <div class="debate-who karin">Karin</div>
-    <div class="debate-title">Recettes enregistrées — projection et envie</div>
-    <div class="debate-desc">Montrer les recettes que l'utilisateur a likées/enregistrées. L'incite à les ajouter à son menu en cours ou à planifier. Crée de la projection et l'envie de cuisiner.</div>
-    <div class="debate-tag karin">→ + Menu / + Semaine prochaine</div>
-  </div>
-  <div class="debate-card mehdi">
-    <div class="debate-who mehdi">Mehdi</div>
-    <div class="debate-title">Recettes cuisinées — accomplissement et fierté</div>
-    <div class="debate-desc">Montrer les recettes que l'utilisateur a déjà réalisées. Rappelle le sentiment d'accomplissement, renforce l'habitude et valorise le parcours effectué.</div>
-    <div class="debate-tag mehdi">✓ Cuisiné il y a X jours</div>
-  </div>
-</div>
-
-<!-- ===== OPTION A : SANS OBJECTIFS ===== -->
-<div class="variant-panel active" id="panel-a">
-
+<!-- ========================== V1 ========================== -->
+<div class="variant-panel" id="panel-v1">
   <div class="intro">
-    <h1>Option A — Sans objectifs · 4 écrans</h1>
-    <p>Même structure de base pour Karin et Mehdi. La seule différence est le dernier bloc : recettes enregistrées (Karin) vs recettes cuisinées (Mehdi).</p>
-  </div>
-
-  <!-- ROW HEADER -->
-  <div class="cols-header">
-    <div class="col-header">
-      <div class="col-label tom">Vision Karin — recettes enregistrées</div>
-      <div class="col-sublabel">Projection · envie · planification</div>
+    <div class="intro-top">
+      <h1>v1 — Bloc "Ce soir/midi" + Bloc "Semaine" séparés</h1>
     </div>
-    <div class="col-header">
-      <div class="col-label tom">Vision Karin — utilisateur actif</div>
-      <div class="col-sublabel">CTA "Ajouter au menu" visible</div>
-    </div>
-    <div class="col-header">
-      <div class="col-label mehdi">Vision Mehdi — recettes cuisinées</div>
-      <div class="col-sublabel">Accomplissement · habitude · fierté</div>
-    </div>
-    <div class="col-header">
-      <div class="col-label mehdi">Vision Mehdi — utilisateur actif</div>
-      <div class="col-sublabel">Badge "cuisinée" + date de réalisation</div>
+    <p>Version initiale avec deux blocs distincts au milieu de la home : un bloc contextuel "Ce soir / Ce midi" et un bloc planning hebdomadaire séparé. Archivée suite au retour de Mehdi.</p>
+    <div class="intro-tags">
+      <span class="otag warn">archivée</span>
+      <span class="otag">Objectif semaine</span>
+      <span class="otag">Ce soir / Ce midi (bloc dédié)</span>
+      <span class="otag">Ta semaine (bloc séparé)</span>
+      <span class="otag">Listing recettes</span>
     </div>
   </div>
 
+  <div class="change-callout">
+    <div class="change-callout-title">Pourquoi cette version est archivée</div>
+    <div class="change-callout-desc">Mehdi a identifié une duplication entre le bloc "Ce soir" et le bloc "Ta semaine" — le jour en surbrillance dans la grille affiche déjà l'info du repas du soir. Deux blocs pour le même besoin = surcharge d'information.</div>
+  </div>
+
+  <div class="section-lbl">Écrans — Option B (avec objectifs)</div>
   <div class="screens-grid">
 
-    <!-- TOM A1 : rien de planifié -->
+    <!-- V1 STATE VIDE -->
     <div class="screen-col">
-      <div class="screen-col-label">A1 — Karin <span class="state-pill new">Rien de planifié</span></div>
-      <div class="phone karin-phone">
+      <div class="screen-col-label">État vide <span class="state-pill empty">Rien de planifié</span></div>
+      <div class="phone">
         <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
         <div class="screen">
           <div class="hdr">
@@ -285,264 +146,25 @@
               <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
             </div>
           </div>
-          <div class="s">
-            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
-            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
-              </div>
-              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook · il y a 1j</div></div><button class="rc-add">+ Menu</button></div>
-            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime · il y a 3j</div></div><button class="rc-add">+ Menu</button></div>
-            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr · il y a 5j</div></div><button class="rc-add">+ Menu</button></div>
-          </div>
-        </div>
-        <div class="tbar">
-          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>
-        </div>
-      </div>
-      <div class="annots">
-        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Les recettes enregistrées sont visibles même sans planification. Le bouton <strong>"+ Menu"</strong> crée le pont immédiat entre inspiration et action.</div></div>
-        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">L'attribution créateur est visible sur chaque ligne. Renforce le lien avec le contenu de l'app.</div></div>
-      </div>
-    </div>
-
-    <!-- TOM A2 : utilisateur actif -->
-    <div class="screen-col">
-      <div class="screen-col-label">A2 — Karin <span class="state-pill active">Utilisateur actif</span></div>
-      <div class="phone karin-phone">
-        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
-        <div class="screen">
-          <div class="hdr">
-            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir c'est quoi ?</div></div>
-            <div class="hdr-right">
-              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>
-              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
-            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
-              </div>
-              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr · il y a 1j</div></div><button class="rc-add">+ Sem. prochaine</button></div>
-            <div class="rr"><div class="rt">🫕</div><div class="ri"><div class="rtitle">Shakshuka maison</div><div class="rmeta">@lenaacook · il y a 2j</div></div><button class="rc-add">+ Menu</button></div>
-            <div class="rr"><div class="rt">🍛</div><div class="ri"><div class="rtitle">Dahl épinards coco</div><div class="rmeta">@foodbymaxime · il y a 4j</div></div><button class="rc-add">+ Menu</button></div>
-          </div>
-        </div>
-        <div class="tbar">
-          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>
-        </div>
-      </div>
-      <div class="annots">
-        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Le CTA s'adapte : <strong>"+ Sem. prochaine"</strong> si la semaine en cours est presque pleine. Pousse à anticiper et planifier au-delà.</div></div>
-        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Chaque recette enregistrée est une <strong>opportunité de conversion vers le planning</strong>. La home devient un outil de gestion, pas juste d'affichage.</div></div>
-      </div>
-    </div>
-
-    <!-- MEHDI A1 : rien de planifié -->
-    <div class="screen-col">
-      <div class="screen-col-label">A3 — Mehdi <span class="state-pill new">Rien de planifié</span></div>
-      <div class="phone mehdi-phone">
-        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
-        <div class="screen">
-          <div class="hdr">
-            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Qu'est-ce qu'on cuisine ?</div></div>
-            <div class="hdr-right">
-              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>
-              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
-            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
-              </div>
-              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 2j</div></div>
-            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 5j</div></div>
-            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 8j</div></div>
-          </div>
-        </div>
-        <div class="tbar">
-          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>
-        </div>
-      </div>
-      <div class="annots">
-        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Le badge <strong>✓ cuisiné il y a X jours</strong> valorise l'effort passé. Crée un sentiment de progression et de régularité.</div></div>
-        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Problème potentiel : un nouvel utilisateur n'a <strong>aucune recette cuisinée</strong>. L'empty state risque d'être peu engageant au démarrage.</div></div>
-      </div>
-    </div>
-
-    <!-- MEHDI A2 : utilisateur actif -->
-    <div class="screen-col">
-      <div class="screen-col-label">A4 — Mehdi <span class="state-pill active">Utilisateur actif</span></div>
-      <div class="phone mehdi-phone">
-        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
-        <div class="screen">
-          <div class="hdr">
-            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir c'est quoi ?</div></div>
-            <div class="hdr-right">
-              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>
-              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
-            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
-              </div>
-              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>
-            </div>
-          </div>
-          <div class="s">
-            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>lundi</div></div>
-            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>mardi</div></div>
-            <div class="rr"><div class="rt">🍜</div><div class="ri"><div class="rtitle">Ramen au poulet rôti</div><div class="rmeta">@cuisine.fr</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>ce soir</div></div>
-          </div>
-        </div>
-        <div class="tbar">
-          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>
-          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>
-        </div>
-      </div>
-      <div class="annots">
-        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Sur un utilisateur actif, la liste des recettes cuisinées <strong>en cours de semaine</strong> renforce le sentiment d'accomplissement au fil des jours.</div></div>
-        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Mais sur la home, cela devient <strong>passif</strong> — le user regarde ce qu'il a fait, sans appel à l'action évident. Moins de conversion vers le planning.</div></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ===== OPTION B : AVEC OBJECTIFS (résumé) ===== -->
-<div class="variant-panel" id="panel-b">
-  <div class="intro">
-    <h1>Option B — Avec objectifs · même logique Karin/Mehdi</h1>
-    <p>Identique à l'option A mais avec le bloc objectif en premier. La différence Tom/Mehdi reste uniquement sur le dernier bloc.</p>
-  </div>
-
-  <div class="cols-header">
-    <div class="col-header"><div class="col-label tom">Vision Karin — recettes enregistrées</div><div class="col-sublabel">+ bloc objectif en tête</div></div>
-    <div class="col-header"><div class="col-label tom">Vision Karin — utilisateur actif</div><div class="col-sublabel">Progression + recettes à cuisiner</div></div>
-    <div class="col-header"><div class="col-label mehdi">Vision Mehdi — recettes cuisinées</div><div class="col-sublabel">+ bloc objectif en tête</div></div>
-    <div class="col-header"><div class="col-label mehdi">Vision Mehdi — utilisateur actif</div><div class="col-sublabel">Progression + accomplissement</div></div>
-  </div>
-
-  <div class="screens-grid">
-
-    <!-- TOM B1 -->
-    <div class="screen-col">
-      <div class="screen-col-label">B1 — Karin <span class="state-pill new">Rien de planifié</span></div>
-      <div class="phone karin-phone">
-        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
-        <div class="screen">
-          <div class="hdr">
-            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Qu'est-ce qu'on cuisine ?</div></div>
-            <div class="hdr-right">
-              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>
-              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
-            </div>
-          </div>
+          <!-- Objectif -->
           <div class="s">
             <div class="sh"><span class="st">objectif semaine</span><span class="bdg">0 / 5 repas</span></div>
             <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div><div class="stats-row"><div class="stat"><div class="sv">0h</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">0 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">0</div><div class="sl2">recettes</div></div></div></div>
           </div>
+          <!-- Ce soir -->
           <div class="s">
             <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
             <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>
           </div>
+          <!-- Semaine -->
           <div class="s">
-            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
-              </div>
-              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>
-            </div>
+            <div class="sh"><span class="st">ta semaine</span></div>
+            <div class="mp"><div class="wg"><div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div><div class="dc"><div class="dl">M</div><div class="dm empty"></div></div><div class="dc"><div class="dl">M</div><div class="dm empty"></div></div><div class="dc"><div class="dl">J</div><div class="dm empty"></div></div><div class="dc"><div class="dl">V</div><div class="dm empty"></div></div><div class="dc"><div class="dl">S</div><div class="dm empty"></div></div><div class="dc"><div class="dl">D</div><div class="dm empty"></div></div></div><button class="cta-dashed">+ Planifier mes repas de la semaine</button></div>
           </div>
+          <!-- Recettes -->
           <div class="s">
-            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook · il y a 1j</div></div><button class="rc-add">+ Menu</button></div>
-            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime · il y a 3j</div></div><button class="rc-add">+ Menu</button></div>
+            <div class="sh"><span class="st">recettes</span></div>
+            <div class="es"><p>Tu n'as pas encore enregistré de recette</p><button class="ec">Explorer les créateurs →</button></div>
           </div>
         </div>
         <div class="tbar">
@@ -554,14 +176,15 @@
         </div>
       </div>
       <div class="annots">
-        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">4 blocs avec objectif. Les recettes enregistrées passent en scroll mais restent accessibles et actionnables.</div></div>
+        <div class="ann"><div class="ann-n">1</div><div class="ann-t">Bloc "Ce soir" et bloc "Ta semaine" sont <strong>deux blocs distincts</strong>. Le même besoin (savoir quoi cuisiner ce soir) est exprimé deux fois.</div></div>
+        <div class="ann"><div class="ann-n">2</div><div class="ann-t">4 blocs visibles + scroll nécessaire pour les recettes → charge cognitive importante.</div></div>
       </div>
     </div>
 
-    <!-- TOM B2 -->
+    <!-- V1 STATE REMPLI -->
     <div class="screen-col">
-      <div class="screen-col-label">B2 — Karin <span class="state-pill active">Utilisateur actif</span></div>
-      <div class="phone karin-phone">
+      <div class="screen-col-label">État rempli <span class="state-pill filled">Utilisateur actif</span></div>
+      <div class="phone">
         <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
         <div class="screen">
           <div class="hdr">
@@ -575,29 +198,21 @@
             <div class="sh"><span class="st">objectif semaine</span><span class="bdg ok">3 / 5 repas</span></div>
             <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:60%"></div></div><div class="stats-row"><div class="stat"><div class="sv">1h30</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">24 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">3</div><div class="sl2">recettes</div></div></div></div>
           </div>
+          <!-- Ce soir rempli -->
           <div class="s">
             <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
             <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>
           </div>
+          <!-- Semaine remplie -->
           <div class="s">
-            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
-              </div>
-              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>
-            </div>
+            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3/7</span></div>
+            <div class="mp"><div class="wg"><div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div><div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div><div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div><div class="dc"><div class="dl">J</div><div class="dm empty"></div></div><div class="dc"><div class="dl">V</div><div class="dm empty"></div></div><div class="dc"><div class="dl">S</div><div class="dm empty"></div></div><div class="dc"><div class="dl">D</div><div class="dm empty"></div></div></div><button class="cta-dashed">+ Planifier jeudi → dimanche</button></div>
           </div>
+          <!-- Recettes -->
           <div class="s">
-            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr · il y a 1j</div></div><button class="rc-add">+ Sem. prochaine</button></div>
-            <div class="rr"><div class="rt">🫕</div><div class="ri"><div class="rtitle">Shakshuka maison</div><div class="rmeta">@lenaacook · il y a 2j</div></div><button class="rc-add">+ Menu</button></div>
+            <div class="sh"><span class="st">recettes</span><span class="sl">voir tout →</span></div>
+            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">il y a 2 jours</div></div><div class="rc">@lenaacook</div></div>
+            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">il y a 4 jours</div></div><div class="rc">@foodbymaxime</div></div>
           </div>
         </div>
         <div class="tbar">
@@ -609,14 +224,48 @@
         </div>
       </div>
       <div class="annots">
-        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Cohérence forte : l'objectif mesure les recettes <strong>planifiées</strong>, les recettes enregistrées alimentent ce pipeline. Les deux blocs se renforcent mutuellement.</div></div>
+        <div class="ann"><div class="ann-n">1</div><div class="ann-t"><strong>Duplication visible</strong> : le bloc "Ce soir" dit "Ramen" et le bloc "Ta semaine" montre 🍜 pour mercredi. L'info est affichée deux fois.</div></div>
+        <div class="ann"><div class="ann-n">2</div><div class="ann-t">Les recettes nécessitent un scroll — elles sont moins visibles dans cet état chargé.</div></div>
       </div>
     </div>
 
-    <!-- MEHDI B1 -->
+  </div>
+</div>
+
+<!-- ========================== V CURRENT ========================== -->
+<div class="variant-panel active" id="panel-vcurrent">
+  <div class="intro">
+    <div class="intro-top">
+      <h1>v current — Bloc semaine fusionné</h1>
+    </div>
+    <p>Proposition Mehdi : un seul bloc "Ta semaine" évolutif qui remplace les deux blocs séparés. Le jour actuel en surbrillance dans la grille + une mini-card sous la grille affiche la recette du jour et le CTA "Cuisiner →". Moins d'info, même valeur.</p>
+    <div class="intro-tags">
+      <span class="otag new">v current</span>
+      <span class="otag">Objectif semaine</span>
+      <span class="otag hi">Bloc semaine fusionné (Mehdi)</span>
+      <span class="otag">Listing recettes</span>
+    </div>
+  </div>
+
+  <div class="change-callout">
+    <div class="change-callout-title">Ce qui change par rapport à v1</div>
+    <div class="change-list">
+      <div class="change-item removed">Bloc "Ce soir / Ce midi" supprimé</div>
+      <div class="change-item changed">Bloc "Ta semaine" → fusionné + évolutif</div>
+      <div class="change-item added">Mini-card recette du jour sous la grille</div>
+      <div class="change-item kept">Objectif semaine conservé</div>
+      <div class="change-item kept">Listing recettes conservé</div>
+      <div class="change-item kept">Navigation 5 onglets conservée</div>
+    </div>
+  </div>
+
+  <div class="section-lbl">Écrans — Option B (avec objectifs)</div>
+  <div class="screens-grid">
+
+    <!-- V CURRENT : EMPTY STATE -->
     <div class="screen-col">
-      <div class="screen-col-label">B3 — Mehdi <span class="state-pill new">Rien de planifié</span></div>
-      <div class="phone mehdi-phone">
+      <div class="screen-col-label">État vide <span class="state-pill empty">Rien de planifié</span></div>
+      <div class="phone">
         <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
         <div class="screen">
           <div class="hdr">
@@ -626,34 +275,36 @@
               <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
             </div>
           </div>
+
+          <!-- Objectif -->
           <div class="s">
             <div class="sh"><span class="st">objectif semaine</span><span class="bdg">0 / 5 repas</span></div>
             <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div><div class="stats-row"><div class="stat"><div class="sv">0h</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">0 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">0</div><div class="sl2">recettes</div></div></div></div>
           </div>
-          <div class="s">
-            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
-            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>
-          </div>
+
+          <!-- Bloc semaine fusionné — empty -->
           <div class="s">
             <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
+            <div class="week-block">
+              <div class="wg2">
+                <div class="dc2"><div class="dl2">L</div><div class="dm2 today-hl empty"></div></div>
+                <div class="dc2"><div class="dl2">M</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">M</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">J</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">V</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">S</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">D</div><div class="dm2 empty"></div></div>
               </div>
-              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>
+              <button class="week-cta">+ Planifier mes repas de la semaine</button>
             </div>
           </div>
+
+          <!-- Recettes vides -->
           <div class="s">
-            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 2j</div></div>
-            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 5j</div></div>
+            <div class="sh"><span class="st">recettes</span></div>
+            <div class="es"><p>Tu n'as pas encore enregistré de recette</p><button class="ec">Explorer les créateurs →</button></div>
           </div>
+
         </div>
         <div class="tbar">
           <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
@@ -664,14 +315,15 @@
         </div>
       </div>
       <div class="annots">
-        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">L'objectif à 0 et les recettes cuisinées vides créent un double problème d'empty state pour un nouvel utilisateur. La home peut sembler froide.</div></div>
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t"><strong>Bloc unique épuré</strong> — grille vide avec jour d'aujourd'hui en surbrillance (point sous la case). Le CTA est intégré dans le bloc.</div></div>
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t">Pas de bloc "Ce soir" vide qui prend de la place. La home démarre avec 3 blocs seulement — objectif, semaine, recettes.</div></div>
       </div>
     </div>
 
-    <!-- MEHDI B2 -->
+    <!-- V CURRENT : STATE REMPLI, RECETTE AUJOURD'HUI -->
     <div class="screen-col">
-      <div class="screen-col-label">B4 — Mehdi <span class="state-pill active">Utilisateur actif</span></div>
-      <div class="phone mehdi-phone">
+      <div class="screen-col-label">État rempli · recette ce soir <span class="state-pill filled">Utilisateur actif</span></div>
+      <div class="phone">
         <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
         <div class="screen">
           <div class="hdr">
@@ -681,34 +333,49 @@
               <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
             </div>
           </div>
+
+          <!-- Objectif -->
           <div class="s">
             <div class="sh"><span class="st">objectif semaine</span><span class="bdg ok">3 / 5 repas</span></div>
             <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:60%"></div></div><div class="stats-row"><div class="stat"><div class="sv">1h30</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">24 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">3</div><div class="sl2">recettes</div></div></div></div>
           </div>
-          <div class="s">
-            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>
-            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>
-          </div>
+
+          <!-- Bloc semaine fusionné — avec recette aujourd'hui -->
           <div class="s">
             <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>
-            <div class="mp">
-              <div class="wg">
-                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>
-                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>
-                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>
-                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>
+            <div class="week-block">
+              <div class="wg2">
+                <div class="dc2"><div class="dl2">L</div><div class="dm2">🍝</div></div>
+                <div class="dc2"><div class="dl2">M</div><div class="dm2">🥗</div></div>
+                <div class="dc2"><div class="dl2">M</div><div class="dm2 today-hl">🍜</div></div>
+                <div class="dc2"><div class="dl2">J</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">V</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">S</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">D</div><div class="dm2 empty"></div></div>
               </div>
-              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>
+              <!-- Mini-card recette du jour -->
+              <div class="today-recipe-card">
+                <div class="trc-emoji">🍜</div>
+                <div class="trc-info">
+                  <div class="trc-label">ce soir · mercredi</div>
+                  <div class="trc-title">Ramen au poulet rôti</div>
+                  <div class="trc-meta">@cuisine.fr · 35 min</div>
+                </div>
+                <button class="trc-btn">Cuisiner →</button>
+              </div>
+              <!-- CTA jours manquants -->
+              <button class="week-cta" style="margin-top:8px">+ Planifier jeudi → dimanche</button>
             </div>
           </div>
+
+          <!-- Recettes -->
           <div class="s">
-            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>
-            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>lundi</div></div>
-            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>mardi</div></div>
+            <div class="sh"><span class="st">recettes</span><span class="sl">voir tout →</span></div>
+            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">il y a 2 jours</div></div><div class="rc">@lenaacook</div></div>
+            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">il y a 4 jours</div></div><div class="rc">@foodbymaxime</div></div>
+            <div class="rr"><div class="rt">🍜</div><div class="ri"><div class="rtitle">Ramen au poulet rôti</div><div class="rmeta">il y a 6 jours</div></div><div class="rc">@cuisine.fr</div></div>
           </div>
+
         </div>
         <div class="tbar">
           <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
@@ -719,7 +386,70 @@
         </div>
       </div>
       <div class="annots">
-        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Sur un utilisateur actif en option B, le bloc objectif reprend déjà le compteur de recettes cuisinées ("3 recettes"). Le bloc en bas devient <strong>redondant</strong>.</div></div>
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t"><strong>Grille + mini-card</strong> — le jour en surbrillance (M avec point) ancre visuellement la recette du jour dans la semaine. Un seul bloc fait les deux jobs.</div></div>
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t">Le bouton <strong>"Cuisiner →"</strong> est une action directe vers la fiche recette / session cuisine. Pas de navigation intermédiaire.</div></div>
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t">Les recettes du listing sont maintenant <strong>visibles sans scroll</strong> — la home est moins chargée qu'en v1.</div></div>
+      </div>
+    </div>
+
+    <!-- V CURRENT : STATE REMPLI, RIEN AUJOURD'HUI -->
+    <div class="screen-col">
+      <div class="screen-col-label">État rempli · rien ce soir <span class="state-pill mehdi">J vide · semaine remplie</span></div>
+      <div class="phone">
+        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>
+        <div class="screen">
+          <div class="hdr">
+            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir, qu'est-ce qu'on cuisine ?</div></div>
+            <div class="hdr-right">
+              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>
+              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>
+            </div>
+          </div>
+
+          <!-- Objectif -->
+          <div class="s">
+            <div class="sh"><span class="st">objectif semaine</span><span class="bdg ok">4 / 5 repas</span></div>
+            <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:80%"></div></div><div class="stats-row"><div class="stat"><div class="sv">2h</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">32 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">4</div><div class="sl2">recettes</div></div></div></div>
+          </div>
+
+          <!-- Bloc semaine — jeudi vide aujourd'hui -->
+          <div class="s">
+            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">4 / 7</span></div>
+            <div class="week-block">
+              <div class="wg2">
+                <div class="dc2"><div class="dl2">L</div><div class="dm2">🍝</div></div>
+                <div class="dc2"><div class="dl2">M</div><div class="dm2">🥗</div></div>
+                <div class="dc2"><div class="dl2">M</div><div class="dm2">🍜</div></div>
+                <div class="dc2"><div class="dl2">J</div><div class="dm2 today-hl empty"></div></div>
+                <div class="dc2"><div class="dl2">V</div><div class="dm2">🥘</div></div>
+                <div class="dc2"><div class="dl2">S</div><div class="dm2 empty"></div></div>
+                <div class="dc2"><div class="dl2">D</div><div class="dm2 empty"></div></div>
+              </div>
+              <!-- Pas de mini-card → CTA à la place -->
+              <button class="week-cta" style="margin-top:9px">+ Ajouter un repas pour ce soir</button>
+            </div>
+          </div>
+
+          <!-- Recettes -->
+          <div class="s">
+            <div class="sh"><span class="st">recettes</span><span class="sl">voir tout →</span></div>
+            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">il y a 2 jours</div></div><div class="rc">@lenaacook</div></div>
+            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">il y a 4 jours</div></div><div class="rc">@foodbymaxime</div></div>
+            <div class="rr"><div class="rt">🍜</div><div class="ri"><div class="rtitle">Ramen au poulet rôti</div><div class="rmeta">il y a 6 jours</div></div><div class="rc">@cuisine.fr</div></div>
+          </div>
+
+        </div>
+        <div class="tbar">
+          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>
+          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>
+          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>
+          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>
+          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>
+        </div>
+      </div>
+      <div class="annots">
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t"><strong>Cas edge important</strong> — la semaine est partiellement remplie mais le jeudi (aujourd'hui) est vide. Pas de mini-card → le CTA s'adapte en "Ajouter un repas pour ce soir".</div></div>
+        <div class="ann"><div class="ann-n orange">M</div><div class="ann-t">Le greeting s'adapte aussi : <strong>"Ce soir, qu'est-ce qu'on cuisine ?"</strong> signale que l'app a détecté le créneau vide.</div></div>
       </div>
     </div>
 
@@ -728,38 +458,20 @@
 
 <!-- NOTES -->
 <div class="notes">
-  <div class="notes-title">Analyse du désaccord Tom / Mehdi</div>
+  <div class="notes-title">Décisions prises · questions ouvertes</div>
   <div class="notes-grid">
-    <div class="nc tom">
-      <h3>Argument pour Karin (recettes enregistrées)</h3>
-      <p>Le bouton "+ Menu" crée une action directe vers le planning. Les recettes enregistrées sont du pipeline à convertir. Fonctionne dès le 1er jour (même sans historique). Cohérent avec le WAP comme North Star.</p>
-    </div>
-    <div class="nc mehdi">
-      <h3>Argument pour Mehdi (recettes cuisinées)</h3>
-      <p>Le sentiment d'accomplissement renforce l'habitude à long terme. Valorise l'effort de l'utilisateur. Crée un lien émotionnel avec l'app. Puissant une fois l'habitude installée.</p>
-    </div>
-    <div class="nc open">
-      <h3>Point faible de Mehdi</h3>
-      <p>Pour un nouvel utilisateur (0 recettes cuisinées) la section est vide et peu engageante. Il faut attendre d'avoir cuisiné pour que la home soit satisfaisante. Mauvais pour l'activation.</p>
-    </div>
-    <div class="nc open">
-      <h3>Une piste de compromis ?</h3>
-      <p>Afficher les recettes enregistrées en état initial, et basculer vers les recettes cuisinées une fois que l'utilisateur en a plusieurs. Ou combiner les deux dans la même liste avec des badges distincts.</p>
-    </div>
-    <div class="nc done">
-      <h3>Ce qui est acté dans les deux cas</h3>
-      <p>Navigation 5 onglets, avatar + couronne en header, "Ce soir / Ce midi" switchable, meal plan avec CTA adaptatif. Seul le dernier bloc change.</p>
-    </div>
-    <div class="nc open">
-      <h3>Décision à prendre</h3>
-      <p>Tom, Mehdi, Alexandra — à vous de jouer. Les 4 écrans de chaque option sont là pour faciliter le choix. Pensez aussi à ce que vous voulez mesurer : conversion (Tom) ou rétention émotionnelle (Mehdi).</p>
-    </div>
+    <div class="nc done"><h3>Option B retenue ✓</h3><p>La home inclut le bloc objectif hebdomadaire en tête. Décidé lors de l'appel Mehdi + Tom.</p></div>
+    <div class="nc done"><h3>Navigation 5 onglets ✓</h3><p>Accueil · Découvrir · Planning · Courses · Recettes. Profil via avatar en header avec couronne premium.</p></div>
+    <div class="nc mehdi"><h3>Bloc semaine fusionné (Mehdi)</h3><p>Un seul bloc évolutif remplace "Ce soir" + "Ta semaine". Grille + mini-card recette du jour + CTA adaptatif. À valider avec Alexandra.</p></div>
+    <div class="nc open"><h3>Recettes enregistrées ou cuisinées ?</h3><p>Le listing de recettes en bas de home reste à trancher. Représenté de façon générique dans cette version.</p></div>
+    <div class="nc open"><h3>Greeting contextuel</h3><p>Le sous-titre du header change selon l'état du planning. À définir : quelles règles exactes pour chaque état ?</p></div>
+    <div class="nc open"><h3>Prochain écran</h3><p>Onglet Découvrir — structure du feed créateurs. Puis fiche recette et flow session cuisine.</p></div>
   </div>
 </div>
 
 <div class="footer">
-  <span>KitChef · wireframe v6 · avril 2026</span>
-  <span>Généré avec Claude · document de travail interne · Karin vs Mehdi</span>
+  <span>KitChef · home screen wireframes · v1 archivée · v current en cours · avril 2026</span>
+  <span>Généré avec Claude · document de travail interne</span>
 </div>
 
 <script>
@@ -770,5 +482,42 @@
     event.target.classList.add('active');
   }
 </script>
+</div>
+
+<script>
+// Inject v7 content into iframe srcdoc
+const v7Content = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>KitChef — Home screen wireframe v6</title>\n<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">\n<style>\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n  :root {\n    --bg: #F5F4F0; --surface: #FFF; --surface2: #F0EFE9;\n    --border: rgba(0,0,0,0.08); --border-med: rgba(0,0,0,0.13);\n    --text: #1A1A18; --text-2: #6B6B65; --text-3: #A8A8A0;\n    --font: \'DM Sans\', system-ui, sans-serif; --mono: \'DM Mono\', monospace;\n    --warn-bg: #FEF3CD; --warn-text: #92650A;\n    --ok-bg: #DCFCE7; --ok-text: #166534;\n    --info-bg: #E0F2FE; --info-text: #0369A1;\n    --karin-bg: #EEF2FF; --karin-text: #3730A3;\n    --mehdi-bg: #FFF7ED; --mehdi-text: #C2410C;\n  }\n  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }\n\n  .page-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 22px 48px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }\n  .logo { display: flex; align-items: center; gap: 10px; }\n  .logo-mark { width: 30px; height: 30px; background: var(--text); border-radius: 8px; display: flex; align-items: center; justify-content: center; }\n  .logo-name { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }\n  .v-badge { font-size: 11px; padding: 3px 10px; background: var(--info-bg); color: var(--info-text); border-radius: 20px; font-weight: 500; }\n  .page-meta { font-size: 12px; color: var(--text-3); font-family: var(--mono); }\n\n  .tabs-wrap { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 48px; }\n  .tabs { display: flex; }\n  .tab-btn { padding: 14px 20px; font-size: 13px; font-weight: 500; color: var(--text-3); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; font-family: var(--font); transition: color 0.15s, border-color 0.15s; }\n  .tab-btn.active { color: var(--text); border-bottom-color: var(--text); }\n  .tab-btn:hover:not(.active) { color: var(--text-2); }\n\n  .intro { padding: 32px 48px 16px; max-width: 900px; }\n  .intro h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 8px; }\n  .intro p { font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: 600px; }\n\n  /* DÉBAT BOX */\n  .debate { margin: 0 48px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }\n  .debate-card { border-radius: 12px; padding: 16px 18px; border: 1px solid transparent; }\n  .debate-card.tom { background: var(--karin-bg); border-color: #C7D2FE; }\n  .debate-card.mehdi { background: var(--mehdi-bg); border-color: #FED7AA; }\n  .debate-who { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-family: var(--mono); margin-bottom: 6px; }\n  .debate-who.karin { color: var(--karin-text); }\n  .debate-who.mehdi { color: var(--mehdi-text); }\n  .debate-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }\n  .debate-desc { font-size: 12px; color: var(--text-2); line-height: 1.6; }\n  .debate-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-top: 8px; font-family: var(--mono); }\n  .debate-tag.karin { background: #C7D2FE; color: var(--karin-text); }\n  .debate-tag.mehdi { background: #FED7AA; color: var(--mehdi-text); }\n\n  .variant-panel { display: none; padding: 0 48px 48px; }\n  .variant-panel.active { display: block; }\n\n  /* COLUMNS HEADER */\n  .cols-header { display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid var(--border); }\n  .col-header { width: 316px; }\n  .col-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); margin-bottom: 4px; }\n  .col-label.karin { color: var(--karin-text); }\n  .col-label.mehdi { color: var(--mehdi-text); }\n  .col-sublabel { font-size: 12px; color: var(--text-2); }\n\n  .screens-grid { display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; }\n  .screen-col { display: flex; flex-direction: column; gap: 12px; }\n  .screen-col-label { font-size: 13px; font-weight: 500; color: var(--text-2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }\n  .state-pill { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-family: var(--mono); font-weight: 400; }\n  .state-pill.new { background: var(--warn-bg); color: var(--warn-text); }\n  .state-pill.active { background: var(--ok-bg); color: var(--ok-text); }\n  .state-pill.tom { background: var(--karin-bg); color: var(--karin-text); }\n  .state-pill.mehdi { background: var(--mehdi-bg); color: var(--mehdi-text); }\n\n  /* PHONE */\n  .phone { width: 316px; background: #FFF; border-radius: 44px; border: 2px solid #D0CFC8; overflow: hidden; box-shadow: 0 2px 0 #B8B7B0, 0 16px 48px rgba(0,0,0,0.10); position: relative; }\n  .phone.karin-phone { border-color: #A5B4FC; box-shadow: 0 2px 0 #818CF8, 0 16px 48px rgba(99,102,241,0.12); }\n  .phone.mehdi-phone { border-color: #FDBA74; box-shadow: 0 2px 0 #FB923C, 0 16px 48px rgba(249,115,22,0.12); }\n  .phone::before { content: \'\'; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 88px; height: 28px; background: #FFF; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; border-bottom: 2px solid #D0CFC8; border-left: 2px solid #D0CFC8; border-right: 2px solid #D0CFC8; z-index: 10; }\n  .phone.karin-phone::before { border-color: #A5B4FC; }\n  .phone.mehdi-phone::before { border-color: #FDBA74; }\n  .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 32px 22px 4px; font-size: 12px; font-weight: 600; color: #1A1A18; font-family: var(--mono); }\n  .screen { overflow-y: auto; max-height: 600px; padding-bottom: 72px; }\n  .screen::-webkit-scrollbar { display: none; }\n\n  /* HEADER */\n  .hdr { padding: 14px 18px 8px; display: flex; justify-content: space-between; align-items: flex-start; }\n  .greeting { font-size: 19px; font-weight: 600; color: #1A1A18; line-height: 1.25; letter-spacing: -0.02em; }\n  .greeting-sub { font-size: 13px; color: #6B6B65; margin-top: 2px; }\n  .hdr-right { display: flex; align-items: flex-start; gap: 6px; }\n  .crown-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }\n  .crown-btn { width: 28px; height: 28px; border-radius: 8px; background: #FFFBEB; border: 1px solid #FDE68A; display: flex; align-items: center; justify-content: center; margin-top: 3px; }\n  .crown-btn svg { width: 14px; height: 14px; }\n  .crown-lbl { font-size: 9px; color: #92650A; font-family: var(--mono); }\n  .ava-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }\n  .ava { width: 34px; height: 34px; border-radius: 50%; background: #F0EFE9; border: 1.5px solid #D0CFC8; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #6B6B65; margin-top: 3px; }\n  .ava-lbl { font-size: 9px; color: #A8A8A0; font-family: var(--mono); }\n\n  /* SECTIONS */\n  .s { padding: 6px 18px; }\n  .sh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }\n  .st { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #A8A8A0; font-family: var(--mono); }\n  .sl { font-size: 11px; color: #A8A8A0; }\n  .bdg { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: #FEF3CD; color: #92650A; font-weight: 500; }\n  .bdg.ok { background: #DCFCE7; color: #166534; }\n\n  /* OBJECTIF */\n  .obj { background: #F0EFE9; border-radius: 13px; border: 1px solid rgba(0,0,0,0.06); padding: 11px 13px; }\n  .prog-track { height: 4px; background: rgba(0,0,0,0.08); border-radius: 99px; overflow: hidden; margin-bottom: 9px; }\n  .prog-fill { height: 100%; border-radius: 99px; background: #1A1A18; }\n  .stats-row { display: flex; gap: 7px; }\n  .stat { flex: 1; background: #FFF; border: 1px solid rgba(0,0,0,0.07); border-radius: 9px; padding: 7px 9px; }\n  .sv { font-size: 13px; font-weight: 600; color: #1A1A18; }\n  .sl2 { font-size: 10px; color: #A8A8A0; margin-top: 1px; font-family: var(--mono); }\n\n  /* CE SOIR / MIDI */\n  .meal-moment-tabs { display: flex; gap: 6px; margin-bottom: 8px; }\n  .mmt { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); background: #FFF; color: #6B6B65; cursor: pointer; font-family: var(--font); }\n  .mmt.on { background: #1A1A18; color: #FFF; border-color: transparent; }\n\n  .tonight-card { background: #1A1A18; border-radius: 13px; padding: 13px 14px; display: flex; align-items: center; gap: 12px; }\n  .tonight-thumb { width: 44px; height: 44px; border-radius: 9px; background: #333330; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }\n  .tonight-info { flex: 1; min-width: 0; }\n  .tonight-label { font-size: 10px; color: #6B6B65; font-family: var(--mono); margin-bottom: 2px; }\n  .tonight-title { font-size: 14px; font-weight: 600; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n  .tonight-meta { font-size: 11px; color: #6B6B65; margin-top: 2px; }\n  .tonight-cta { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #FFF; flex-shrink: 0; }\n\n  .tonight-empty { background: #F0EFE9; border-radius: 13px; border: 1px dashed rgba(0,0,0,0.14); padding: 13px 14px; display: flex; align-items: center; gap: 12px; }\n  .tonight-empty-icon { width: 40px; height: 40px; border-radius: 9px; background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }\n  .tonight-empty-info { flex: 1; }\n  .tonight-empty-title { font-size: 13px; font-weight: 500; color: #6B6B65; }\n  .tonight-empty-sub { font-size: 11px; color: #A8A8A0; margin-top: 1px; }\n  .tonight-empty-btn { font-size: 11px; padding: 5px 10px; background: #FFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 7px; color: #1A1A18; cursor: pointer; font-family: var(--font); flex-shrink: 0; }\n\n  /* MEAL PLAN */\n  .mp { background: #F0EFE9; border-radius: 13px; border: 1px solid rgba(0,0,0,0.06); padding: 11px 13px; }\n  .wg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 8px; }\n  .dc { display: flex; flex-direction: column; align-items: center; gap: 2px; }\n  .dl { font-size: 9px; color: #A8A8A0; font-family: var(--mono); }\n  .dm { width: 30px; height: 30px; border-radius: 8px; background: #FFF; border: 1px solid rgba(0,0,0,0.07); display: flex; align-items: center; justify-content: center; font-size: 14px; }\n  .dm.empty { background: rgba(0,0,0,0.03); border-style: dashed; }\n  .dm.today { border: 1.5px solid #1A1A18; }\n  .cta-dashed { width: 100%; padding: 7px; background: #FFF; border: 1px dashed rgba(0,0,0,0.14); border-radius: 9px; font-size: 11px; color: #6B6B65; cursor: pointer; text-align: center; font-family: var(--font); }\n\n  /* RECETTES — variante commune */\n  .rr { display: flex; align-items: center; gap: 9px; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }\n  .rr:last-child { border-bottom: none; }\n  .rt { width: 38px; height: 38px; border-radius: 9px; background: #F0EFE9; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }\n  .ri { flex: 1; min-width: 0; }\n  .rtitle { font-size: 12px; font-weight: 500; color: #1A1A18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\n  .rmeta { font-size: 10px; color: #A8A8A0; margin-top: 1px; font-family: var(--mono); }\n  .rc { font-size: 9px; padding: 2px 7px; background: #F0EFE9; border-radius: 20px; color: #6B6B65; border: 1px solid rgba(0,0,0,0.06); flex-shrink: 0; font-family: var(--mono); }\n\n  /* RECETTES TOM — "à cuisiner" : bouton ajouter au menu */\n  .rc-add { font-size: 10px; padding: 3px 8px; background: #EEF2FF; border: 1px solid #C7D2FE; border-radius: 20px; color: var(--karin-text); cursor: pointer; flex-shrink: 0; font-family: var(--font); white-space: nowrap; }\n\n  /* RECETTES MEHDI — "cuisinées" : badge check + date */\n  .rc-done { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--ok-text); flex-shrink: 0; font-family: var(--mono); }\n  .rc-done-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--ok-bg); display: flex; align-items: center; justify-content: center; font-size: 9px; }\n\n  /* EMPTY */\n  .es { display: flex; flex-direction: column; align-items: center; padding: 16px; gap: 8px; background: #F0EFE9; border-radius: 13px; border: 1px dashed rgba(0,0,0,0.12); }\n  .es p { font-size: 11px; color: #6B6B65; text-align: center; line-height: 1.5; }\n  .ec { padding: 6px 14px; background: #FFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 7px; font-size: 11px; color: #1A1A18; cursor: pointer; font-family: var(--font); }\n\n  /* TAB BAR */\n  .tbar { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: rgba(255,255,255,0.96); border-top: 1px solid rgba(0,0,0,0.07); display: flex; align-items: center; padding: 0 2px; }\n  .tb { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding-top: 7px; }\n  .tb svg { width: 18px; height: 18px; }\n  .tlbl { font-size: 8.5px; color: #A8A8A0; font-family: var(--mono); }\n  .tb.on .tlbl { color: #1A1A18; font-weight: 500; }\n\n  /* ANNOTATIONS */\n  .annots { margin-top: 14px; display: flex; flex-direction: column; gap: 7px; max-width: 316px; }\n  .ann { display: flex; gap: 8px; align-items: flex-start; }\n  .ann-n { width: 19px; height: 19px; border-radius: 50%; color: #FFF; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }\n  .ann-n.karin { background: #6366F1; }\n  .ann-n.mehdi { background: #EA580C; }\n  .ann-n.neutral { background: #1A1A18; }\n  .ann-t { font-size: 12px; color: #6B6B65; line-height: 1.5; }\n  .ann-t strong { color: #1A1A18; font-weight: 500; }\n\n  /* NOTES */\n  .notes { padding: 32px 48px 48px; border-top: 1px solid var(--border); }\n  .notes-title { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-3); font-family: var(--mono); margin-bottom: 18px; }\n  .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; max-width: 960px; }\n  .nc { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); padding: 14px 16px; }\n  .nc h3 { font-size: 13px; font-weight: 500; margin-bottom: 5px; }\n  .nc p { font-size: 12px; color: var(--text-2); line-height: 1.6; }\n  .nc.karin { border-color: #A5B4FC; background: var(--karin-bg); }\n  .nc.karin h3 { color: var(--karin-text); }\n  .nc.mehdi { border-color: #FDBA74; background: var(--mehdi-bg); }\n  .nc.mehdi h3 { color: var(--mehdi-text); }\n  .nc.open { border-color: #FDE68A; background: #FFFBEB; }\n  .nc.open h3 { color: #92650A; }\n  .nc.done { border-color: #86EFAC; background: #F0FDF4; }\n  .nc.done h3 { color: #166534; }\n\n  .footer { padding: 20px 48px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); font-family: var(--mono); display: flex; justify-content: space-between; }\n\n  @media (max-width: 820px) {\n    .page-header, .tabs-wrap, .intro, .variant-panel, .debate, .notes, .footer { padding-left: 20px; padding-right: 20px; }\n    .debate { margin-left: 20px; margin-right: 20px; grid-template-columns: 1fr; }\n  }\n</style>\n</head>\n<body>\n\n<header class="page-header">\n  <div class="logo">\n    <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4a1 1 0 011-1h8a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" fill="white" fill-opacity="0.15"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>\n    <span class="logo-name">KitChef</span>\n  </div>\n  <div style="display:flex;align-items:center;gap:12px">\n    <span class="page-meta">Home screen · wireframe v6 · avril 2026</span>\n    <span class="v-badge">Karin vs Mehdi</span>\n  </div>\n</header>\n\n<div class="tabs-wrap">\n  <div class="tabs">\n    <button class="tab-btn active" onclick="switchTab(\'a\')">Option A — Sans objectifs</button>\n    <button class="tab-btn" onclick="switchTab(\'b\')">Option B — Avec objectifs</button>\n  </div>\n</div>\n\n<div style="height:20px"></div>\n\n<!-- DEBATE BOX -->\n<div class="debate">\n  <div class="debate-card tom">\n    <div class="debate-who karin">Karin</div>\n    <div class="debate-title">Recettes enregistrées — projection et envie</div>\n    <div class="debate-desc">Montrer les recettes que l\'utilisateur a likées/enregistrées. L\'incite à les ajouter à son menu en cours ou à planifier. Crée de la projection et l\'envie de cuisiner.</div>\n    <div class="debate-tag karin">→ + Menu / + Semaine prochaine</div>\n  </div>\n  <div class="debate-card mehdi">\n    <div class="debate-who mehdi">Mehdi</div>\n    <div class="debate-title">Recettes cuisinées — accomplissement et fierté</div>\n    <div class="debate-desc">Montrer les recettes que l\'utilisateur a déjà réalisées. Rappelle le sentiment d\'accomplissement, renforce l\'habitude et valorise le parcours effectué.</div>\n    <div class="debate-tag mehdi">✓ Cuisiné il y a X jours</div>\n  </div>\n</div>\n\n<!-- ===== OPTION A : SANS OBJECTIFS ===== -->\n<div class="variant-panel active" id="panel-a">\n\n  <div class="intro">\n    <h1>Option A — Sans objectifs · 4 écrans</h1>\n    <p>Même structure de base pour Karin et Mehdi. La seule différence est le dernier bloc : recettes enregistrées (Karin) vs recettes cuisinées (Mehdi).</p>\n  </div>\n\n  <!-- ROW HEADER -->\n  <div class="cols-header">\n    <div class="col-header">\n      <div class="col-label tom">Vision Karin — recettes enregistrées</div>\n      <div class="col-sublabel">Projection · envie · planification</div>\n    </div>\n    <div class="col-header">\n      <div class="col-label tom">Vision Karin — utilisateur actif</div>\n      <div class="col-sublabel">CTA "Ajouter au menu" visible</div>\n    </div>\n    <div class="col-header">\n      <div class="col-label mehdi">Vision Mehdi — recettes cuisinées</div>\n      <div class="col-sublabel">Accomplissement · habitude · fierté</div>\n    </div>\n    <div class="col-header">\n      <div class="col-label mehdi">Vision Mehdi — utilisateur actif</div>\n      <div class="col-sublabel">Badge "cuisinée" + date de réalisation</div>\n    </div>\n  </div>\n\n  <div class="screens-grid">\n\n    <!-- TOM A1 : rien de planifié -->\n    <div class="screen-col">\n      <div class="screen-col-label">A1 — Karin <span class="state-pill new">Rien de planifié</span></div>\n      <div class="phone karin-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Qu\'est-ce qu\'on cuisine ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook · il y a 1j</div></div><button class="rc-add">+ Menu</button></div>\n            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime · il y a 3j</div></div><button class="rc-add">+ Menu</button></div>\n            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr · il y a 5j</div></div><button class="rc-add">+ Menu</button></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Les recettes enregistrées sont visibles même sans planification. Le bouton <strong>"+ Menu"</strong> crée le pont immédiat entre inspiration et action.</div></div>\n        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">L\'attribution créateur est visible sur chaque ligne. Renforce le lien avec le contenu de l\'app.</div></div>\n      </div>\n    </div>\n\n    <!-- TOM A2 : utilisateur actif -->\n    <div class="screen-col">\n      <div class="screen-col-label">A2 — Karin <span class="state-pill active">Utilisateur actif</span></div>\n      <div class="phone karin-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir c\'est quoi ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr · il y a 1j</div></div><button class="rc-add">+ Sem. prochaine</button></div>\n            <div class="rr"><div class="rt">🫕</div><div class="ri"><div class="rtitle">Shakshuka maison</div><div class="rmeta">@lenaacook · il y a 2j</div></div><button class="rc-add">+ Menu</button></div>\n            <div class="rr"><div class="rt">🍛</div><div class="ri"><div class="rtitle">Dahl épinards coco</div><div class="rmeta">@foodbymaxime · il y a 4j</div></div><button class="rc-add">+ Menu</button></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Le CTA s\'adapte : <strong>"+ Sem. prochaine"</strong> si la semaine en cours est presque pleine. Pousse à anticiper et planifier au-delà.</div></div>\n        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Chaque recette enregistrée est une <strong>opportunité de conversion vers le planning</strong>. La home devient un outil de gestion, pas juste d\'affichage.</div></div>\n      </div>\n    </div>\n\n    <!-- MEHDI A1 : rien de planifié -->\n    <div class="screen-col">\n      <div class="screen-col-label">A3 — Mehdi <span class="state-pill new">Rien de planifié</span></div>\n      <div class="phone mehdi-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Qu\'est-ce qu\'on cuisine ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 2j</div></div>\n            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 5j</div></div>\n            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 8j</div></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Le badge <strong>✓ cuisiné il y a X jours</strong> valorise l\'effort passé. Crée un sentiment de progression et de régularité.</div></div>\n        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Problème potentiel : un nouvel utilisateur n\'a <strong>aucune recette cuisinée</strong>. L\'empty state risque d\'être peu engageant au démarrage.</div></div>\n      </div>\n    </div>\n\n    <!-- MEHDI A2 : utilisateur actif -->\n    <div class="screen-col">\n      <div class="screen-col-label">A4 — Mehdi <span class="state-pill active">Utilisateur actif</span></div>\n      <div class="phone mehdi-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir c\'est quoi ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>lundi</div></div>\n            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>mardi</div></div>\n            <div class="rr"><div class="rt">🍜</div><div class="ri"><div class="rtitle">Ramen au poulet rôti</div><div class="rmeta">@cuisine.fr</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>ce soir</div></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Sur un utilisateur actif, la liste des recettes cuisinées <strong>en cours de semaine</strong> renforce le sentiment d\'accomplissement au fil des jours.</div></div>\n        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Mais sur la home, cela devient <strong>passif</strong> — le user regarde ce qu\'il a fait, sans appel à l\'action évident. Moins de conversion vers le planning.</div></div>\n      </div>\n    </div>\n\n  </div>\n</div>\n\n<!-- ===== OPTION B : AVEC OBJECTIFS (résumé) ===== -->\n<div class="variant-panel" id="panel-b">\n  <div class="intro">\n    <h1>Option B — Avec objectifs · même logique Karin/Mehdi</h1>\n    <p>Identique à l\'option A mais avec le bloc objectif en premier. La différence Tom/Mehdi reste uniquement sur le dernier bloc.</p>\n  </div>\n\n  <div class="cols-header">\n    <div class="col-header"><div class="col-label tom">Vision Karin — recettes enregistrées</div><div class="col-sublabel">+ bloc objectif en tête</div></div>\n    <div class="col-header"><div class="col-label tom">Vision Karin — utilisateur actif</div><div class="col-sublabel">Progression + recettes à cuisiner</div></div>\n    <div class="col-header"><div class="col-label mehdi">Vision Mehdi — recettes cuisinées</div><div class="col-sublabel">+ bloc objectif en tête</div></div>\n    <div class="col-header"><div class="col-label mehdi">Vision Mehdi — utilisateur actif</div><div class="col-sublabel">Progression + accomplissement</div></div>\n  </div>\n\n  <div class="screens-grid">\n\n    <!-- TOM B1 -->\n    <div class="screen-col">\n      <div class="screen-col-label">B1 — Karin <span class="state-pill new">Rien de planifié</span></div>\n      <div class="phone karin-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Qu\'est-ce qu\'on cuisine ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">objectif semaine</span><span class="bdg">0 / 5 repas</span></div>\n            <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div><div class="stats-row"><div class="stat"><div class="sv">0h</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">0 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">0</div><div class="sl2">recettes</div></div></div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook · il y a 1j</div></div><button class="rc-add">+ Menu</button></div>\n            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime · il y a 3j</div></div><button class="rc-add">+ Menu</button></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">4 blocs avec objectif. Les recettes enregistrées passent en scroll mais restent accessibles et actionnables.</div></div>\n      </div>\n    </div>\n\n    <!-- TOM B2 -->\n    <div class="screen-col">\n      <div class="screen-col-label">B2 — Karin <span class="state-pill active">Utilisateur actif</span></div>\n      <div class="phone karin-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir c\'est quoi ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">objectif semaine</span><span class="bdg ok">3 / 5 repas</span></div>\n            <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:60%"></div></div><div class="stats-row"><div class="stat"><div class="sv">1h30</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">24 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">3</div><div class="sl2">recettes</div></div></div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes enregistrées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🥘</div><div class="ri"><div class="rtitle">Curry de lentilles</div><div class="rmeta">@cuisine.fr · il y a 1j</div></div><button class="rc-add">+ Sem. prochaine</button></div>\n            <div class="rr"><div class="rt">🫕</div><div class="ri"><div class="rtitle">Shakshuka maison</div><div class="rmeta">@lenaacook · il y a 2j</div></div><button class="rc-add">+ Menu</button></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n karin">K</div><div class="ann-t">Cohérence forte : l\'objectif mesure les recettes <strong>planifiées</strong>, les recettes enregistrées alimentent ce pipeline. Les deux blocs se renforcent mutuellement.</div></div>\n      </div>\n    </div>\n\n    <!-- MEHDI B1 -->\n    <div class="screen-col">\n      <div class="screen-col-label">B3 — Mehdi <span class="state-pill new">Rien de planifié</span></div>\n      <div class="phone mehdi-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Qu\'est-ce qu\'on cuisine ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">objectif semaine</span><span class="bdg">0 / 5 repas</span></div>\n            <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:0%"></div></div><div class="stats-row"><div class="stat"><div class="sv">0h</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">0 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">0</div><div class="sl2">recettes</div></div></div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-empty"><div class="tonight-empty-icon">🍽️</div><div class="tonight-empty-info"><div class="tonight-empty-title">Rien de prévu ce soir</div><div class="tonight-empty-sub">Trouve une idée dans Découvrir</div></div><button class="tonight-empty-btn">Découvrir →</button></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="sl">voir tout →</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm today empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier mes repas de la semaine</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 2j</div></div>\n            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>il y a 5j</div></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">L\'objectif à 0 et les recettes cuisinées vides créent un double problème d\'empty state pour un nouvel utilisateur. La home peut sembler froide.</div></div>\n      </div>\n    </div>\n\n    <!-- MEHDI B2 -->\n    <div class="screen-col">\n      <div class="screen-col-label">B4 — Mehdi <span class="state-pill active">Utilisateur actif</span></div>\n      <div class="phone mehdi-phone">\n        <div class="status-bar"><span>9:41</span><span style="font-size:11px">●●●</span></div>\n        <div class="screen">\n          <div class="hdr">\n            <div><div class="greeting">Hey Tom 👋</div><div class="greeting-sub">Ce soir c\'est quoi ?</div></div>\n            <div class="hdr-right">\n              <div class="crown-wrap"><div class="crown-btn"><svg viewBox="0 0 14 14" fill="none"><path d="M1.5 10.5h11M2 10L1 4.5l3 2.5L7 2l3 3L13 4.5 12 10H2z" stroke="#92650A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="crown-lbl">premium</div></div>\n              <div class="ava-wrap"><div class="ava">T</div><div class="ava-lbl">profil</div></div>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">objectif semaine</span><span class="bdg ok">3 / 5 repas</span></div>\n            <div class="obj"><div class="prog-track"><div class="prog-fill" style="width:60%"></div></div><div class="stats-row"><div class="stat"><div class="sv">1h30</div><div class="sl2">gagnées</div></div><div class="stat"><div class="sv">24 €</div><div class="sl2">économisés</div></div><div class="stat"><div class="sv">3</div><div class="sl2">recettes</div></div></div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><div class="meal-moment-tabs"><button class="mmt on">Ce soir</button><button class="mmt">Ce midi</button></div></div>\n            <div class="tonight-card"><div class="tonight-thumb">🍜</div><div class="tonight-info"><div class="tonight-label">planifié · mercredi soir</div><div class="tonight-title">Ramen au poulet rôti</div><div class="tonight-meta">@cuisine.fr · 35 min</div></div><div class="tonight-cta">→</div></div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">ta semaine</span><span class="bdg ok">3 / 7</span></div>\n            <div class="mp">\n              <div class="wg">\n                <div class="dc"><div class="dl">L</div><div class="dm">🍝</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm">🥗</div></div>\n                <div class="dc"><div class="dl">M</div><div class="dm today">🍜</div></div>\n                <div class="dc"><div class="dl">J</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">V</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">S</div><div class="dm empty"></div></div>\n                <div class="dc"><div class="dl">D</div><div class="dm empty"></div></div>\n              </div>\n              <button class="cta-dashed">+ Planifier jeudi → dimanche</button>\n            </div>\n          </div>\n          <div class="s">\n            <div class="sh"><span class="st">recettes cuisinées</span><span class="sl">voir tout →</span></div>\n            <div class="rr"><div class="rt">🍝</div><div class="ri"><div class="rtitle">Pasta citron burrata</div><div class="rmeta">@lenaacook</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>lundi</div></div>\n            <div class="rr"><div class="rt">🥗</div><div class="ri"><div class="rtitle">Salade César maison</div><div class="rmeta">@foodbymaxime</div></div><div class="rc-done"><div class="rc-done-icon">✓</div>mardi</div></div>\n          </div>\n        </div>\n        <div class="tbar">\n          <div class="tb on"><svg viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1.5" fill="#1A1A18"/><rect x="10" y="1" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="1" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/><rect x="10" y="10" width="7" height="7" rx="1.5" fill="#D0CFC8"/></svg><div class="tlbl">Accueil</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Découvrir</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="13" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 1v4M12 1v4M2 7h14" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Planning</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><path d="M3 4h12l-1.5 8H4.5L3 4z" stroke="#D0CFC8" stroke-width="1.4" stroke-linejoin="round"/><circle cx="7" cy="15.5" r="1" fill="#D0CFC8"/><circle cx="12" cy="15.5" r="1" fill="#D0CFC8"/><path d="M1 2h2.5" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Courses</div></div>\n          <div class="tb"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="#D0CFC8" stroke-width="1.4"/><path d="M6 6h6M6 9h4" stroke="#D0CFC8" stroke-width="1.4" stroke-linecap="round"/></svg><div class="tlbl">Recettes</div></div>\n        </div>\n      </div>\n      <div class="annots">\n        <div class="ann"><div class="ann-n mehdi">M</div><div class="ann-t">Sur un utilisateur actif en option B, le bloc objectif reprend déjà le compteur de recettes cuisinées ("3 recettes"). Le bloc en bas devient <strong>redondant</strong>.</div></div>\n      </div>\n    </div>\n\n  </div>\n</div>\n\n<!-- NOTES -->\n<div class="notes">\n  <div class="notes-title">Analyse du désaccord Tom / Mehdi</div>\n  <div class="notes-grid">\n    <div class="nc tom">\n      <h3>Argument pour Karin (recettes enregistrées)</h3>\n      <p>Le bouton "+ Menu" crée une action directe vers le planning. Les recettes enregistrées sont du pipeline à convertir. Fonctionne dès le 1er jour (même sans historique). Cohérent avec le WAP comme North Star.</p>\n    </div>\n    <div class="nc mehdi">\n      <h3>Argument pour Mehdi (recettes cuisinées)</h3>\n      <p>Le sentiment d\'accomplissement renforce l\'habitude à long terme. Valorise l\'effort de l\'utilisateur. Crée un lien émotionnel avec l\'app. Puissant une fois l\'habitude installée.</p>\n    </div>\n    <div class="nc open">\n      <h3>Point faible de Mehdi</h3>\n      <p>Pour un nouvel utilisateur (0 recettes cuisinées) la section est vide et peu engageante. Il faut attendre d\'avoir cuisiné pour que la home soit satisfaisante. Mauvais pour l\'activation.</p>\n    </div>\n    <div class="nc open">\n      <h3>Une piste de compromis ?</h3>\n      <p>Afficher les recettes enregistrées en état initial, et basculer vers les recettes cuisinées une fois que l\'utilisateur en a plusieurs. Ou combiner les deux dans la même liste avec des badges distincts.</p>\n    </div>\n    <div class="nc done">\n      <h3>Ce qui est acté dans les deux cas</h3>\n      <p>Navigation 5 onglets, avatar + couronne en header, "Ce soir / Ce midi" switchable, meal plan avec CTA adaptatif. Seul le dernier bloc change.</p>\n    </div>\n    <div class="nc open">\n      <h3>Décision à prendre</h3>\n      <p>Tom, Mehdi, Alexandra — à vous de jouer. Les 4 écrans de chaque option sont là pour faciliter le choix. Pensez aussi à ce que vous voulez mesurer : conversion (Tom) ou rétention émotionnelle (Mehdi).</p>\n    </div>\n  </div>\n</div>\n\n<div class="footer">\n  <span>KitChef · wireframe v6 · avril 2026</span>\n  <span>Généré avec Claude · document de travail interne · Karin vs Mehdi</span>\n</div>\n\n<script>\n  function switchTab(id) {\n    document.querySelectorAll(\'.tab-btn\').forEach(b => b.classList.remove(\'active\'));\n    document.querySelectorAll(\'.variant-panel\').forEach(p => p.classList.remove(\'active\'));\n    document.querySelector(\'#panel-\' + id).classList.add(\'active\');\n    event.target.classList.add(\'active\');\n  }\n</script>\n</body>\n</html>\n';
+document.getElementById('v1-iframe').srcdoc = v7Content;
+
+function switchVersion(val) {
+  document.querySelectorAll('.version-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + val).classList.add('active');
+  // badges
+  document.getElementById('badge-v1').style.display = val === 'v1' ? '' : 'none';
+  document.getElementById('badge-vcurrent').style.display = val === 'vcurrent' ? '' : 'none';
+  // resize iframe if v1
+  if (val === 'v1') {
+    setTimeout(() => resizeIframe(document.getElementById('v1-iframe')), 100);
+  }
+}
+
+function resizeIframe(iframe) {
+  try {
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    iframe.style.height = doc.documentElement.scrollHeight + 'px';
+  } catch(e) {
+    iframe.style.height = '2000px';
+  }
+}
+
+// Also handle the v8 tab switching if needed
+function switchTab(id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.variant-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('#panel-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
 </body>
 </html>
